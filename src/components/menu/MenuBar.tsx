@@ -74,32 +74,30 @@ const MenuBar = () => {
         </button>
       </Transition>
 
-      <Suspense>
-        <Transition show={isOpen}>
-          <TransitionChild>
-            <div className="fixed h-full w-full top-0 left-0 backdrop-blur-sm transition-opacity delay-600 ease-out duration-300 data-[enter]:opacity-0" />
-          </TransitionChild>
-          <TransitionChild>
-            <div className="fixed md:h-3/6 h-full w-full md:w-3/5 top-0 md:top-10 left-0 right-0 mx-auto rounded-xl bg-[#f1f4f7] text-[#7f828a] justify-between items-center transition-all duration-300 ease-in data-[enter]:w-full data-[enter]:h-1/6 data-[closed]:h-1/6 data-[closed]:w-full data-[enter]:opacity-0 data-[enter]:-translate-y-10 data-[closed]:-translate-y-10 data-[closed]:opacity-0">
-              <ClickAwayListener
-                onClick={onClickOutside}
-                className="h-full w-full relative"
-              >
-                <MenuTop
-                  command={
-                    mode === "command" ? "⏎ Run Command" : "'/' for commands"
-                  }
-                  onChange={handleChange}
-                />
-                {mode === "list" && <MenuList />}
-                {mode === "command" && <CommandList command={query} />}
-                {mode === "search" && <SearchContent query={query} />}
-                <MenuBottom enterLabel={mode === "command" ? "Run" : "Open"} />
-              </ClickAwayListener>
-            </div>
-          </TransitionChild>
-        </Transition>
-      </Suspense>
+      <Transition show={isOpen}>
+        <TransitionChild>
+          <div className="fixed h-full w-full top-0 left-0 backdrop-blur-sm transition-opacity delay-600 ease-out duration-300 data-[enter]:opacity-0" />
+        </TransitionChild>
+        <TransitionChild>
+          <div className="fixed md:h-3/6 h-full w-full md:w-3/5 top-0 md:top-10 left-0 right-0 mx-auto rounded-xl bg-[#f1f4f7] text-[#7f828a] justify-between items-center transition-all duration-300 ease-in data-[enter]:w-full data-[enter]:h-1/6 data-[closed]:h-1/6 data-[closed]:w-full data-[enter]:opacity-0 data-[enter]:-translate-y-10 data-[closed]:-translate-y-10 data-[closed]:opacity-0">
+            <ClickAwayListener
+              onClick={onClickOutside}
+              className="h-full w-full relative"
+            >
+              <MenuTop
+                command={
+                  mode === "command" ? "⏎ Run Command" : "'/' for commands"
+                }
+                onChange={handleChange}
+              />
+              {mode === "list" && <MenuList />}
+              {mode === "command" && <CommandList command={query} />}
+              {mode === "search" && <SearchContent query={query} />}
+              <MenuBottom enterLabel={mode === "command" ? "Run" : "Open"} />
+            </ClickAwayListener>
+          </div>
+        </TransitionChild>
+      </Transition>
     </div>
   )
 }
