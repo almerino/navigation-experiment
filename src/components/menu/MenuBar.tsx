@@ -65,7 +65,7 @@ const MenuBar = () => {
         <button
           key="menu-button"
           onClick={() => setIsOpen(true)}
-          className="fixed flex w-full top-0 left-0 right-0 mx-auto bg-[#e1e6ed] text-[#7f828a] px-8 py-3 justify-between items-center transition-all duration-300 ease-in data-[closed]:w-3/5 data-[closed]:translate-y-10 data-[closed]:opacity-0 data-[enter]:w-3/5 data-[enter]:translate-y-10 data-[enter]:opacity-0"
+          className="fixed flex w-full top-0 left-0 right-0 mx-auto bg-[#e1e6ed] text-[#7f828a] px-8 py-3 justify-between items-center transition-all duration-200 ease-in data-[closed]:w-3/5 data-[closed]:translate-y-10 data-[closed]:opacity-0 data-[enter]:w-3/5 data-[enter]:translate-y-10 data-[enter]:opacity-0"
         >
           <div className="text-lg">Search for anything</div>
           <div className="flex px-4 py-3 rounded-lg bg-white">
@@ -79,13 +79,13 @@ const MenuBar = () => {
         <TransitionChild>
           <div
             key="menu-background"
-            className="fixed h-full w-full top-0 left-0 backdrop-blur-sm transition-opacity ease-in duration-300 data-[enter]:opacity-0"
+            className="fixed h-full w-full top-0 left-0 backdrop-blur-sm transition-opacity ease-in duration-200 data-[enter]:opacity-0"
           />
         </TransitionChild>
         <TransitionChild>
           <div
             key="menu-content"
-            className="fixed md:h-3/6 h-full w-full md:w-3/5 top-0 md:top-10 left-0 right-0 mx-auto rounded-xl bg-[#f1f4f7] text-[#7f828a] justify-between items-center transition-all duration-300 ease-in data-[enter]:w-full data-[enter]:h-1/6 data-[closed]:h-1/6 data-[closed]:w-full data-[enter]:opacity-0 data-[enter]:-translate-y-10 data-[closed]:-translate-y-10 data-[closed]:opacity-0"
+            className="fixed md:h-3/6 h-full w-full md:w-3/5 top-0 md:top-10 left-0 right-0 mx-auto rounded-xl bg-[#f1f4f7] text-[#7f828a] justify-between items-center transition-all duration-200 ease-in data-[enter]:w-full data-[enter]:h-1/6 data-[closed]:h-1/6 data-[closed]:w-full data-[enter]:opacity-0 data-[enter]:-translate-y-10 data-[closed]:-translate-y-10 data-[closed]:opacity-0"
           >
             <ClickAwayListener
               onClick={onClickOutside}
