@@ -50,6 +50,17 @@ type SearchResult = {
   title: string
 }
 
+type Chunk = {
+  metadata: {
+    id: string
+    chunk_html: string
+    metadata: {
+      openapi: string
+      title: string
+    }
+  }[]
+}
+
 const SearchContent = ({ query }: { query: string }) => {
   const queryText = useDebouncedValue(query, 500)
 
@@ -63,7 +74,7 @@ const SearchContent = ({ query }: { query: string }) => {
       }
 
       const res = await response.json()
-      return res.score_chunks.map((chunk) => ({
+      return res.score_chunks.map((chunk: Chunk) => ({
         id: chunk.metadata[0].id,
         description: { __html: chunk.metadata[0].chunk_html },
         href: `https://docs.private.joinformal.com/${chunk.metadata[0].link}`,
