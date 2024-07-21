@@ -17,17 +17,73 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  /* color: rgb(var(--foreground-rgb)); */
+  /* background: #fdfefe; */
+  background: linear-gradient(#edeff2, #cbd7f6);
+  height: 100%;
+  width: 100%;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+@keyframes antSearchOn {
+  0% {
+    transform: scale(1.2) translateY(-40px);
+    /* transformorigin: 0% 0%; */
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    /* transformorigin: 0% 0%; */
+    opacity: 1;
+  }
+}
+
+@keyframes antSearchOff {
+  0% {
+    transform: translateY(-40px) scale(1);
+    /* transformorigin: 0% 0%; */
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.2) translateY(0);
+    /* transformorigin: 0% 0%; */
+    opacity: 0;
+  }
+}
+
+.ant-modal-search-enter,
+.ant-modal-search-appear {
+  /* transform-origin: 0%; */
+  top: 0;
+  opacity: 0;
+  animation-play-state: paused;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  /* animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06); */
+}
+
+.ant-modal-search-leave {
+  animation-play-state: paused;
+  animation-duration: 0.4s;
+  animation-fill-mode: both;
+  /* animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1); */
+}
+
+.ant-modal-search-enter.ant-modal-search-enter-active,
+.ant-modal-search-appear.ant-modal-search-appear-active {
+  animation-name: antSearchOn;
+  animation-play-state: running;
+}
+
+.ant-modal-search-leave.ant-modal-search-leave-active {
+  animation-name: antSearchOff;
+  animation-play-state: running;
+  pointer-events: none;
 }
