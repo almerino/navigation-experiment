@@ -1,13 +1,6 @@
 "use client"
 
-import {
-  ChangeEvent,
-  Suspense,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react"
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react"
 import { usePathname } from "next/navigation"
 import { AppstoreOutlined } from "@ant-design/icons"
 import { Transition, TransitionChild } from "@headlessui/react"
@@ -52,7 +45,7 @@ const MenuBar = () => {
 
   useKeyPress(allKeys, shortcutEvents)
 
-  const handleChange = (event: ChangeEvent) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value)
   }
 
