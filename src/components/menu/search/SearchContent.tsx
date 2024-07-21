@@ -54,6 +54,7 @@ type Chunk = {
   metadata: {
     id: string
     chunk_html: string
+    link: string
     metadata: {
       openapi: string
       title: string
