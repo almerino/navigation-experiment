@@ -13,7 +13,11 @@ export default function ClickAwayListener({
 
   useEffect(() => {
     function handleClick(event: MouseEvent) {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (
+        ref.current &&
+        event.target instanceof Element &&
+        !ref.current.contains(event.target)
+      ) {
         onClick()
       }
     }
