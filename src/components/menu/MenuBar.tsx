@@ -72,8 +72,8 @@ const MenuBar = () => {
       <button
         onClick={handleClick}
         className={clsx([
-          "fixed w-full flex top-0 left-0 right-0 mx-auto z-10 bg-[#e1e6ed] text-[#7f828a] px-8 py-3 justify-between items-center cursor-pointer transition-all duration-300 ease-in",
-          isOpen ? "opacity-0 md:w-3/5 md:translate-y-10" : "opacity-100",
+          "fixed w-full flex top-0 left-0 right-0 mx-auto bg-[#e1e6ed] text-[#7f828a] px-8 py-3 justify-between items-center cursor-pointer transition-all duration-300 ease-in",
+          isOpen ? "opacity-0 md:w-3/5 md:translate-y-10" : "opacity-100 z-10",
         ])}
       >
         <div className="text-lg">Search for anything</div>
