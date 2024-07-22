@@ -1,9 +1,9 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { MouseEvent, useCallback, useEffect, useMemo, useState } from "react"
+import clsx from "clsx"
 import { usePathname } from "next/navigation"
 import { AppstoreOutlined } from "@ant-design/icons"
-import { Transition, TransitionChild } from "@headlessui/react"
 import useKeyPress from "@/hooks/useKeyPress"
 
 import CommandList from "./command/CommandList"
@@ -21,9 +21,17 @@ const MenuBar = () => {
   const pathname = usePathname()
   const allKeys = useMemo(() => ["meta+KeyE", "Escape"], [])
 
+  const handleClick = (e: MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsOpen(true)
+  }
+
   const onClickOutside = () => {
-    setIsOpen(false)
-    setMode("list")
+    if (isOpen) {
+      setIsOpen(false)
+      setMode("list")
+    }
   }
 
   useEffect(() => {
@@ -61,50 +69,54 @@ const MenuBar = () => {
 
   return (
     <div className="h-16">
-      <Transition show={!isOpen}>
-        <button
-          key="menu-button"
-          onClick={() => setIsOpen(true)}
-          className="fixed flex w-full top-0 left-0 right-0 mx-auto bg-[#e1e6ed] text-[#7f828a] px-8 py-3 justify-between items-center transition-all duration-200 ease-in data-[closed]:w-3/5 data-[closed]:translate-y-10 data-[closed]:opacity-0 data-[enter]:w-3/5 data-[enter]:translate-y-10 data-[enter]:opacity-0"
-        >
-          <div className="text-lg">Search for anything</div>
-          <div className="flex px-4 py-3 rounded-lg bg-white">
-            <AppstoreOutlined />
-            <div className="ml-2 text-xs">⌘E</div>
-          </div>
-        </button>
-      </Transition>
+      <button
+        onClick={handleClick}
+        className={clsx([
+          "fixed w-full flex top-0 left-0 right-0 mx-auto z-10 bg-[#e1e6ed] text-[#7f828a] px-8 py-3 justify-between items-center cursor-pointer transition-all duration-300 ease-in",
+          isOpen ? "opacity-0 md:w-3/5 md:translate-y-10" : "opacity-100",
+        ])}
+      >
+        <div className="text-lg">Search for anything</div>
+        <div className="flex px-4 py-3 rounded-lg bg-white">
+          <AppstoreOutlined />
+          <div className="ml-2 text-xs">⌘E</div>
+        </div>
+      </button>
 
-      <Transition show={isOpen}>
-        <TransitionChild>
-          <div
-            key="menu-background"
-            className="fixed h-full w-full top-0 left-0 backdrop-blur-sm transition-opacity ease-in duration-200 data-[enter]:opacity-0"
+      <div
+        className={clsx([
+          "fixed h-full w-full top-0 left-0 backdrop-blur-sm transition-all ease-in duration-300",
+          isOpen ? "opacity-100" : "opacity-0",
+        ])}
+      />
+
+      <div
+        className={clsx([
+          "fixed left-0 right-0 mx-auto w-full rounded-xl bg-[#f1f4f7] text-[#7f828a] justify-between items-center transition-all duration-300 ease-in",
+          isOpen
+            ? "md:h-3/6 md:w-3/5 top-0 md:top-10 opacity-100"
+            : "h-full md:h-1/6 top-0 opacity-0",
+        ])}
+      >
+        <ClickAwayListener
+          onClick={onClickOutside}
+          className="h-full w-full relative"
+        >
+          <MenuTop
+            command={mode === "command" ? "⏎ Run Command" : "'/' for commands"}
+            focused={isOpen}
+            onChange={handleChange}
           />
-        </TransitionChild>
-        <TransitionChild>
-          <div
-            key="menu-content"
-            className="fixed md:h-3/6 h-full w-full md:w-3/5 top-0 md:top-10 left-0 right-0 mx-auto rounded-xl bg-[#f1f4f7] text-[#7f828a] justify-between items-center transition-all duration-200 ease-in data-[enter]:w-full data-[enter]:h-1/6 data-[closed]:h-1/6 data-[closed]:w-full data-[enter]:opacity-0 data-[enter]:-translate-y-10 data-[closed]:-translate-y-10 data-[closed]:opacity-0"
-          >
-            <ClickAwayListener
-              onClick={onClickOutside}
-              className="h-full w-full relative"
-            >
-              <MenuTop
-                command={
-                  mode === "command" ? "⏎ Run Command" : "'/' for commands"
-                }
-                onChange={handleChange}
-              />
-              {mode === "list" && <MenuList />}
+          {isOpen && (
+            <>
+              {mode === "list" && <MenuList isOpen={isOpen} />}
               {mode === "command" && <CommandList command={query} />}
               {mode === "search" && <SearchContent query={query} />}
-              <MenuBottom enterLabel={mode === "command" ? "Run" : "Open"} />
-            </ClickAwayListener>
-          </div>
-        </TransitionChild>
-      </Transition>
+            </>
+          )}
+          <MenuBottom enterLabel={mode === "command" ? "Run" : "Open"} />
+        </ClickAwayListener>
+      </div>
     </div>
   )
 }

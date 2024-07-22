@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import useKeyPress from "@/hooks/useKeyPress"
@@ -11,7 +11,7 @@ import TagButton from "../../ui/TagButton"
 import MenuRow from "./MenuRow"
 import { menuList } from "./list"
 
-const MenuList = () => {
+const MenuList = ({ isOpen }: { isOpen: boolean }) => {
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null)
   const [selectedOption, setSelectedOption] = useState<Option | null>(null)
   const options = useRef<Option[]>(
@@ -23,6 +23,11 @@ const MenuList = () => {
   )
 
   const router = useRouter()
+
+  useEffect(() => {
+    setSelectedGroup(null)
+    setSelectedOption(null)
+  }, [isOpen])
 
   const selectGroup = (group?: Group) => () => {
     if (group) {
