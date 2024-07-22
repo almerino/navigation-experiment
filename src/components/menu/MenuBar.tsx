@@ -102,13 +102,16 @@ const MenuBar = () => {
           onClick={onClickOutside}
           className="h-full w-full relative"
         >
-          <MenuTop
-            command={mode === "command" ? "⏎ Run Command" : "'/' for commands"}
-            focused={isOpen}
-            onChange={handleChange}
-          />
           {isOpen && (
             <>
+              <MenuTop
+                command={
+                  mode === "command" ? "⏎ Run Command" : "'/' for commands"
+                }
+                focused={isOpen}
+                onChange={handleChange}
+              />
+
               {mode === "list" && <MenuList isOpen={isOpen} />}
               {mode === "command" && <CommandList command={query} />}
               {mode === "search" && <SearchContent query={query} />}
